@@ -25,11 +25,11 @@ import com.binarybricks.coinbit.utils.Formaters
 import com.binarybricks.coinbit.utils.TRANSACTION_TYPE_BUY
 import com.binarybricks.coinbit.utils.dismissKeyboard
 import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManagerImpl
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.android.material.snackbar.Snackbar
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_coin_transaction.*
+import timber.log.Timber
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -114,7 +114,7 @@ class CoinTransactionActivity : AppCompatActivity(), CoinTransactionContract.Vie
 
         coinTransactionPresenter.getAllSupportedExchanges()
 
-        FirebaseCrashlytics.getInstance().log("CoinTransactionActivity")
+        Timber.i("CoinTransactionActivity")
     }
 
     private fun initializeUI() {

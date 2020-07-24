@@ -4,31 +4,32 @@ import CoinDashboardContract
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.fragment.app.Fragment
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.binarybricks.coinbit.CoinBitApplication
 import com.binarybricks.coinbit.R
-import com.binarybricks.coinbit.featurecomponents.*
 import com.binarybricks.coinbit.data.PreferenceManager
 import com.binarybricks.coinbit.data.database.entities.CoinTransaction
 import com.binarybricks.coinbit.data.database.entities.WatchedCoin
-import com.binarybricks.coinbit.network.models.CoinPrice
-import com.binarybricks.coinbit.network.models.CryptoCompareNews
-import com.binarybricks.coinbit.network.schedulers.RxSchedulers
+import com.binarybricks.coinbit.featurecomponents.*
 import com.binarybricks.coinbit.features.CryptoCompareRepository
 import com.binarybricks.coinbit.features.coindetails.CoinDetailsPagerActivity
 import com.binarybricks.coinbit.features.coinsearch.CoinSearchActivity
+import com.binarybricks.coinbit.network.models.CoinPrice
+import com.binarybricks.coinbit.network.models.CryptoCompareNews
+import com.binarybricks.coinbit.network.schedulers.RxSchedulers
 import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManager
 import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManagerImpl
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
-import java.util.HashMap
+import timber.log.Timber
+import java.util.*
 import kotlin.collections.ArrayList
 
 class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
@@ -64,6 +65,11 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         CoinDashboardPresenter(rxSchedulers, dashboardRepository, coinRepo)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val inflate = inflater.inflate(R.layout.fragment_dashboard, container, false)
@@ -79,27 +85,26 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         // empty existing list
         coinDashboardList = ArrayList()
-        coinDashboardList.add(0, CarousalModule.CarousalModuleData(null))
-        coinDashboardList.add(1, DashboardNewsModule.DashboardNewsModuleData(null))
+        //coinDashboardList.add(0, CarousalModule.CarousalModuleData(null))
+        //coinDashboardList.add(1, DashboardNewsModule.DashboardNewsModuleData(null))
 
         initializeUI(inflate)
 
         // get top coins
-        coinDashboardPresenter.getTopCoinsByTotalVolume24hours(PreferenceManager.getDefaultCurrency(context))
+        //coinDashboardPresenter.getTopCoinsByTotalVolume24hours(PreferenceManager.getDefaultCurrency(context))
 
         // get news
-        coinDashboardPresenter.getLatestNewsFromCryptoCompare()
+        //coinDashboardPresenter.getLatestNewsFromCryptoCompare()
 
         // get prices for watched coin
         coinDashboardPresenter.loadWatchedCoinsAndTransactions()
 
-        FirebaseCrashlytics.getInstance().log("CoinDashboardFragment")
+        Timber.i("CoinDashboardFragment")
 
         return inflate
     }
 
     private fun initializeUI(inflatedView: View) {
-
         inflatedView.rvDashboard.layoutManager = LinearLayoutManager(context)
 
         coinDashboardAdapter = CoinDashboardAdapter(PreferenceManager.getDefaultCurrency(context), androidResourceManager,
@@ -132,7 +137,10 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         // Add Dashboard Header with empty data
         // coinDashboardList.add(DashboardHeaderModule.DashboardHeaderModuleData(watchedCoinList, coinTransactionList, hashMapOf()))
 
+        coinDashboardList.removeIf { it is DashboardCoinModule.DashboardCoinModuleData && watchedCoinList.contains(it.watchedCoin) }
+
         watchedCoinList.forEach { watchedCoin ->
+
             coinDashboardList.add(DashboardCoinModule.DashboardCoinModuleData(watchedCoin, null,
                     coinTransactionList, object : DashboardCoinModule.OnCoinItemClickListener {
                 override fun onCoinClicked(watchedCoin: WatchedCoin) {
@@ -148,7 +156,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
             }
         }))
 
-        coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
+        //coinDashboardList.add(GenericFooterModule.FooterModuleData(getString(R.string.crypto_compare), getString(R.string.crypto_compare_url)))
 
         coinDashboardAdapter?.coinDashboardList = coinDashboardList
         coinDashboardAdapter?.notifyDataSetChanged()

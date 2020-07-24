@@ -19,8 +19,8 @@ import com.binarybricks.coinbit.data.database.entities.WatchedCoin
 import com.binarybricks.coinbit.network.schedulers.RxSchedulers
 import com.binarybricks.coinbit.features.CryptoCompareRepository
 import com.binarybricks.coinbit.features.coindetails.CoinDetailsActivity
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_coin_search.*
+import timber.log.Timber
 
 class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
 
@@ -62,7 +62,7 @@ class CoinSearchActivity : AppCompatActivity(), CoinSearchContract.View {
 
         coinSearchPresenter.loadAllCoins()
 
-        FirebaseCrashlytics.getInstance().log("CoinSearchActivity")
+        Timber.i("CoinSearchActivity")
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {

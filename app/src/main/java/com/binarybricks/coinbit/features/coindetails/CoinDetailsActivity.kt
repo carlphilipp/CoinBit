@@ -14,8 +14,8 @@ import com.binarybricks.coinbit.data.database.entities.WatchedCoin
 import com.binarybricks.coinbit.network.schedulers.RxSchedulers
 import com.binarybricks.coinbit.features.CryptoCompareRepository
 import com.binarybricks.coinbit.features.coin.CoinFragment
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_coin_details.*
+import timber.log.Timber
 
 class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
 
@@ -73,7 +73,7 @@ class CoinDetailsActivity : AppCompatActivity(), CoinDetailsContract.View {
             coinDetailPresenter.getWatchedCoinFromSymbol(intent.getStringExtra(COIN_SYMBOL))
         }
 
-        FirebaseCrashlytics.getInstance().log("CoinDetailsActivity")
+        Timber.i("CoinDetailsActivity")
     }
 
     override fun onWatchedCoinLoaded(coin: WatchedCoin?) {

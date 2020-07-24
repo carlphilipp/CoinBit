@@ -18,8 +18,8 @@ import com.binarybricks.coinbit.network.models.CryptoTicker
 import com.binarybricks.coinbit.network.schedulers.RxSchedulers
 import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManagerImpl
 import com.binarybricks.coinbit.utils.openCustomTab
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_coin_ticker_list.*
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -75,7 +75,7 @@ class CoinTickerActivity : AppCompatActivity(), CoinTickerContract.View {
 
         coinTickerPresenter.getCryptoTickers(coinName.toLowerCase())
 
-        FirebaseCrashlytics.getInstance().log("CoinTickerActivity")
+        Timber.i("CoinTickerActivity")
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {

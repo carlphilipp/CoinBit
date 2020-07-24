@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.room.Room
 import com.binarybricks.coinbit.data.database.CoinBitDatabase
 import com.facebook.stetho.Stetho
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.plugins.RxJavaPlugins
 import timber.log.Timber
 import timber.log.Timber.DebugTree
@@ -55,9 +54,9 @@ class CoinBitApplication : Application() {
                 return
             }
             if (priority == Log.ERROR) {
-                FirebaseCrashlytics.getInstance().log("E/$tag:$message")
+                Timber.e("E/$tag:$message")
             } else if (priority == Log.WARN) {
-                FirebaseCrashlytics.getInstance().log("W/$tag:$message")
+                Timber.w("W/$tag:$message")
             }
         }
     }

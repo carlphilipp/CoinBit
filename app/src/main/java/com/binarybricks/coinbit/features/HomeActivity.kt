@@ -3,14 +3,14 @@ package com.binarybricks.coinbit.features
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import com.binarybricks.coinbit.R
 import com.binarybricks.coinbit.features.coinsearch.CoinDiscoveryFragment
 import com.binarybricks.coinbit.features.dashboard.CoinDashboardFragment
 import com.binarybricks.coinbit.features.settings.SettingsFragment
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_home.*
+import timber.log.Timber
 
 class HomeActivity : AppCompatActivity() {
 
@@ -28,24 +28,16 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        switchToDashboard(savedInstanceState)
+        switchToDashboard()
 
         // if fragment exist reuse it
         // if not then add it
 
         bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.actionHome -> {
-                    switchToDashboard(savedInstanceState)
-                }
-
-                R.id.actionSearch -> {
-                    switchToSearch(savedInstanceState)
-                }
-
-                R.id.actionSettings -> {
-                    switchToSettings(savedInstanceState)
-                }
+                R.id.actionHome -> switchToDashboard()
+                R.id.actionSearch -> switchToSearch()
+                R.id.actionSettings -> switchToSettings()
             }
             return@setOnNavigationItemSelectedListener true
         }
@@ -62,11 +54,10 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        FirebaseCrashlytics.getInstance().log("HomeScreen")
+        Timber.i("HomeScreen")
     }
 
-    private fun switchToDashboard(savedInstanceState: Bundle?) {
-
+    private fun switchToDashboard() {
         val coinDashboardFragment = supportFragmentManager.findFragmentByTag(CoinDashboardFragment.TAG)
                 ?: CoinDashboardFragment()
 
@@ -79,8 +70,7 @@ class HomeActivity : AppCompatActivity() {
                 .commit()
     }
 
-    private fun switchToSearch(savedInstanceState: Bundle?) {
-
+    private fun switchToSearch() {
         val coinDiscoveryFragment = supportFragmentManager.findFragmentByTag(CoinDiscoveryFragment.TAG)
                 ?: CoinDiscoveryFragment()
 
@@ -90,8 +80,7 @@ class HomeActivity : AppCompatActivity() {
                 .commit()
     }
 
-    private fun switchToSettings(savedInstanceState: Bundle?) {
-
+    private fun switchToSettings() {
         val settingsFragment = supportFragmentManager.findFragmentByTag(SettingsFragment.TAG)
                 ?: SettingsFragment()
 

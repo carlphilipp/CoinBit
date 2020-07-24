@@ -14,8 +14,8 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.view.View
 import com.binarybricks.coinbit.R
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_exchange_pair_search.*
+import timber.log.Timber
 
 class PairSearchActivity : AppCompatActivity() {
 
@@ -82,7 +82,7 @@ class PairSearchActivity : AppCompatActivity() {
             }
         })
 
-        FirebaseCrashlytics.getInstance().log("PairSearchActivity")
+        Timber.i("PairSearchActivity")
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

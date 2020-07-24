@@ -26,8 +26,8 @@ import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManager
 import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManagerImpl
 import com.binarybricks.coinbit.utils.ui.OnVerticalScrollListener
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.fragment_coin_details.*
+import timber.log.Timber
 import java.math.BigDecimal
 
 class CoinFragment : Fragment(), CoinContract.View {
@@ -77,7 +77,7 @@ class CoinFragment : Fragment(), CoinContract.View {
 
         setHasOptionsMenu(true)
 
-        FirebaseCrashlytics.getInstance().log("CoinFragment")
+        Timber.i("CoinFragment")
 
         return inflate
     }

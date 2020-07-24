@@ -15,9 +15,9 @@ import com.binarybricks.coinbit.CoinBitApplication
 import com.binarybricks.coinbit.R
 import com.binarybricks.coinbit.data.database.entities.WatchedCoin
 import com.binarybricks.coinbit.network.schedulers.RxSchedulers
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_pager_coin_details.*
 import kotlinx.android.synthetic.main.fragment_coin_details.*
+import timber.log.Timber
 
 class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.View {
 
@@ -67,7 +67,7 @@ class CoinDetailsPagerActivity : AppCompatActivity(), CoinDetailsPagerContract.V
 
         coinDetailPagerPresenter.loadWatchedCoins()
 
-        FirebaseCrashlytics.getInstance().log("CoinDetailsPagerActivity")
+        Timber.i("CoinDetailsPagerActivity")
     }
 
     override fun onWatchedCoinsLoaded(watchedCoinList: List<WatchedCoin>?) {

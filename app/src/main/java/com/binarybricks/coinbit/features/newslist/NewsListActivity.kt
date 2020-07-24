@@ -17,8 +17,8 @@ import com.binarybricks.coinbit.network.schedulers.RxSchedulers
 import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManager
 import com.binarybricks.coinbit.utils.resourcemanager.AndroidResourceManagerImpl
 import com.binarybricks.coinbit.utils.openCustomTab
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_news_list.*
+import timber.log.Timber
 
 /**
  * Created by Pragya Agrawal
@@ -75,7 +75,7 @@ class NewsListActivity : AppCompatActivity(), CryptoNewsContract.View {
 
         cryptoNewsPresenter.getCryptoNews(coinSymbol)
 
-        FirebaseCrashlytics.getInstance().log("NewsListActivity")
+        Timber.i("NewsListActivity")
     }
 
     override fun showOrHideLoadingIndicator(showLoading: Boolean) {

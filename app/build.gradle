@@ -4,8 +4,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "org.jmailen.kotlinter"
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.firebase.firebase-perf'
-apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion versions.compileSdk
@@ -47,7 +45,7 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
+    //debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
 
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -113,12 +111,6 @@ dependencies {
     implementation "com.facebook.stetho:stetho-js-rhino:${versions.stetho}"
 
     implementation "com.github.ittianyu:BottomNavigationViewEx:${versions.bottomNav}"
-
-    // firebase
-    implementation "com.google.firebase:firebase-core:${versions.firebaseCore}"
-    implementation "com.google.firebase:firebase-crashlytics:${versions.firebaseCrashlytics}"
-    implementation "com.google.firebase:firebase-analytics:${versions.firebaseAnalytics}"
-    implementation "com.google.firebase:firebase-perf:${versions.firebasePerf}"
 
     // test
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.4'
