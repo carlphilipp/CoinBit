@@ -3,6 +3,7 @@ package com.binarybricks.coinbit.network.models
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import java.math.BigDecimal
 
 /**
 Created by Pranay Airan 1/15/18.
@@ -41,7 +42,7 @@ data class CoinPrice(
     val lastMarket: String? = null,
 
     @field:SerializedName("MKTCAP")
-    var marketCap: String? = null,
+    var marketCap: BigDecimal? = null,
 
     @field:SerializedName("LASTUPDATE")
     val lastUpdateTime: Int? = null,
@@ -71,7 +72,7 @@ data class CoinPrice(
     val price: String? = null,
 
     @field:SerializedName("CHANGEPCTDAY")
-    val changePercentageDay: String? = null,
+    val changePercentageDay: Double? = null,
 
     @field:SerializedName("LASTVOLUMETO")
     val lastVolumeTo: String? = null,

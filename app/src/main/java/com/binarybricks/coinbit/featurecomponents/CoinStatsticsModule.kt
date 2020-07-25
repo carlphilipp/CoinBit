@@ -46,7 +46,7 @@ class CoinStatsticsModule(private val androidResourceManager: AndroidResourceMan
         inflatedView.tvAvgVolumeAmount.text = formatter.formatAmount(coinPrice.totalVolume24Hour
                 ?: "0", currency, true)
 
-        inflatedView.tvAvgMarketCapAmount.text = formatter.formatAmount(coinPrice.marketCap
+        inflatedView.tvAvgMarketCapAmount.text = formatter.formatAmount(coinPrice.marketCap.toString()
                 ?: "0", currency, false)
 
         inflatedView.tvSupplyNumber.text = androidResourceManager.getString(R.string.twoTextWithSpace,

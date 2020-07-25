@@ -107,25 +107,21 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         menu.findItem(R.id.sort_by_name).setOnMenuItemClickListener {
             this@CoinDashboardFragment.sortBy = SortBy.NAME
-            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
             getAllWatchedCoinsPrice()
             true
         }
         menu.findItem(R.id.sort_by_ticker).setOnMenuItemClickListener {
             this@CoinDashboardFragment.sortBy = SortBy.TICKER
-            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
             getAllWatchedCoinsPrice()
             true
         }
         menu.findItem(R.id.sort_by_cap).setOnMenuItemClickListener {
             this@CoinDashboardFragment.sortBy = SortBy.MARKET_CAP
-            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
             getAllWatchedCoinsPrice()
             true
         }
         menu.findItem(R.id.sort_by_perf).setOnMenuItemClickListener {
             this@CoinDashboardFragment.sortBy = SortBy.PERFORMANCE
-            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
             getAllWatchedCoinsPrice()
             true
         }
@@ -235,7 +231,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         val topCardList = mutableListOf<TopCardModule.TopCardsModuleData>()
         topCoins.forEach {
             topCardList.add(TopCardModule.TopCardsModuleData("${it.fromSymbol}/${it.toSymbol}", it.price
-                    ?: "0", it.changePercentage24Hour ?: "0", it.marketCap ?: "0",
+                    ?: "0", it.changePercentage24Hour ?: "0", it.marketCap.toString() ?: "0",
                     it.fromSymbol ?: ""))
         }
 

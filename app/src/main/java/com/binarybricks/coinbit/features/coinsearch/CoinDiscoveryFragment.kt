@@ -111,7 +111,7 @@ class CoinDiscoveryFragment : Fragment(), CoinDiscoveryContract.View {
         val topCardList = mutableListOf<TopCardModule.TopCardsModuleData>()
         topCoins.forEach {
             topCardList.add(TopCardModule.TopCardsModuleData("${it.fromSymbol}/${it.toSymbol}", it.price
-                    ?: "0", it.changePercentage24Hour ?: "0", it.marketCap ?: "0",
+                    ?: "0", it.changePercentage24Hour ?: "0", it.marketCap.toString() ?: "0",
                     it.fromSymbol ?: ""))
         }
 

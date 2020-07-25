@@ -66,10 +66,9 @@ class DashboardCoinModule(
             inflatedView.pbLoading.hide()
 
             if (coinPrice.changePercentageDay != null) {
-                inflatedView.tvCoinPercentChange.text = androidResourceManager.getString(R.string.coinDayChanges,
-                        coinPrice.changePercentageDay.toDouble())
+                inflatedView.tvCoinPercentChange.text = androidResourceManager.getString(R.string.coinDayChanges, coinPrice.changePercentageDay)
 
-                if (coinPrice.changePercentageDay.toDouble() < 0) {
+                if (coinPrice.changePercentageDay < 0) {
                     inflatedView.tvCoinPercentChange.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorLoss))
                 } else {
                     inflatedView.tvCoinPercentChange.setTextColor(ContextCompat.getColor(inflatedView.context, R.color.colorGain))
@@ -79,7 +78,7 @@ class DashboardCoinModule(
             animateCoinPrice(inflatedView, coinPrice.price)
             val purchaseQuantity = dashboardCoinModuleData.watchedCoin.purchaseQuantity
 
-            inflatedView.tvCoinMarketCap.text = CoinBitExtendedCurrency.getAmountTextForDisplay(BigDecimal(coinPrice.marketCap), currency)
+            inflatedView.tvCoinMarketCap.text = CoinBitExtendedCurrency.getAmountTextForDisplay(coinPrice.marketCap!!, currency)
 
             // check if coin is purchased
             if (purchaseQuantity > BigDecimal.ZERO) {
@@ -146,8 +145,8 @@ class DashboardCoinModule(
                 SortBy.DEFAULT -> coin1.watchedCoin.coin.sortOrder!!.compareTo(coin2.watchedCoin.coin.sortOrder!!)
                 SortBy.NAME -> coin1.watchedCoin.coin.coinName.compareTo(coin2.watchedCoin.coin.coinName)
                 SortBy.TICKER -> coin1.watchedCoin.coin.symbol.compareTo(coin2.watchedCoin.coin.symbol)
-                SortBy.MARKET_CAP -> coin1.coinPrice!!.marketCap!!.compareTo(coin2.coinPrice!!.marketCap!!)
-                SortBy.PERFORMANCE -> -coin1.coinPrice!!.changePercentage24Hour!!.compareTo(coin2.coinPrice!!.changePercentage24Hour!!)
+                SortBy.MARKET_CAP -> -coin1.coinPrice!!.marketCap!!.compareTo(coin2.coinPrice!!.marketCap!!)
+                SortBy.PERFORMANCE -> -coin1.coinPrice!!.changePercentageDay!!.compareTo(coin2.coinPrice!!.changePercentageDay!!)
             }
         }
     }
