@@ -3,6 +3,7 @@ import com.binarybricks.coinbit.data.database.entities.WatchedCoin
 import com.binarybricks.coinbit.network.models.CoinPrice
 import com.binarybricks.coinbit.network.models.CryptoCompareNews
 import com.binarybricks.coinbit.features.BaseView
+import com.binarybricks.coinbit.features.dashboard.SortBy
 
 /**
 Created by Pranay Airan
@@ -22,5 +23,6 @@ interface CoinDashboardContract {
         fun loadCoinsPrices(fromCurrencySymbol: String, toCurrencySymbol: String)
         fun getTopCoinsByTotalVolume24hours(toCurrencySymbol: String)
         fun getLatestNewsFromCryptoCompare()
+        fun sortWatchedCoins(sortBy: SortBy)
     }
 }

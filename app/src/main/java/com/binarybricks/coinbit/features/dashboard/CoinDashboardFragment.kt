@@ -4,9 +4,7 @@ import CoinDashboardContract
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.annotation.CallSuper
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -44,6 +42,7 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     private var coinDashboardAdapter: CoinDashboardAdapter? = null
     private var watchedCoinList: List<WatchedCoin> = emptyList()
     private var coinTransactionList: List<CoinTransaction> = emptyList()
+    var sortBy: SortBy = SortBy.DEFAULT
 
     private val rxSchedulers: RxSchedulers by lazy {
         RxSchedulers.instance
@@ -65,17 +64,14 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         CoinDashboardPresenter(rxSchedulers, dashboardRepository, coinRepo)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val inflate = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
         val toolbar = inflate.toolbar
-        toolbar?.title = getString(R.string.market)
+        toolbar?.run {
+            title = getString(R.string.market)
+        }
 
         (activity as AppCompatActivity).setSupportActionBar(toolbar)
 
@@ -90,6 +86,8 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
 
         initializeUI(inflate)
 
+        setHasOptionsMenu(true)
+
         // get top coins
         //coinDashboardPresenter.getTopCoinsByTotalVolume24hours(PreferenceManager.getDefaultCurrency(context))
 
@@ -102,6 +100,37 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         Timber.i("CoinDashboardFragment")
 
         return inflate
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.market_menu, menu)
+
+        menu.findItem(R.id.sort_by_name).setOnMenuItemClickListener {
+            this@CoinDashboardFragment.sortBy = SortBy.NAME
+            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
+            getAllWatchedCoinsPrice()
+            true
+        }
+        menu.findItem(R.id.sort_by_ticker).setOnMenuItemClickListener {
+            this@CoinDashboardFragment.sortBy = SortBy.TICKER
+            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
+            getAllWatchedCoinsPrice()
+            true
+        }
+        menu.findItem(R.id.sort_by_cap).setOnMenuItemClickListener {
+            this@CoinDashboardFragment.sortBy = SortBy.MARKET_CAP
+            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
+            getAllWatchedCoinsPrice()
+            true
+        }
+        menu.findItem(R.id.sort_by_perf).setOnMenuItemClickListener {
+            this@CoinDashboardFragment.sortBy = SortBy.PERFORMANCE
+            //coinDashboardPresenter.loadWatchedCoinsAndTransactions()
+            getAllWatchedCoinsPrice()
+            true
+        }
+
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     private fun initializeUI(inflatedView: View) {
@@ -118,7 +147,6 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
     }
 
     override fun onWatchedCoinsAndTransactionsLoaded(watchedCoinList: List<WatchedCoin>, coinTransactionList: List<CoinTransaction>) {
-
         this.watchedCoinList = watchedCoinList
         this.coinTransactionList = coinTransactionList
 
@@ -188,12 +216,16 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         adapterDashboardList?.forEachIndexed { index, item ->
             if (item is DashboardCoinModule.DashboardCoinModuleData && coinPriceListMap.contains(item.watchedCoin.coin.symbol.toUpperCase())) {
                 item.coinPrice = coinPriceListMap[item.watchedCoin.coin.symbol.toUpperCase()]
-                coinDashboardAdapter?.notifyItemChanged(index)
+                //coinDashboardAdapter?.notifyItemChanged(index)
             } else if (item is DashboardHeaderModule.DashboardHeaderModuleData) {
                 item.coinPriceListMap = coinPriceListMap
-                coinDashboardAdapter?.notifyItemChanged(index)
+                //coinDashboardAdapter?.notifyItemChanged(index)
             }
         }
+
+        adapterDashboardList?.sortWith(ModuleItemComparator(sortBy))
+
+        coinDashboardAdapter?.notifyDataSetChanged()
 
         // update dashboard card
     }

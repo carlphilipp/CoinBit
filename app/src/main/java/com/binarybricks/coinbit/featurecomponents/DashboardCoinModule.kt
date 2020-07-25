@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.binarybricks.coinbit.R
 import com.binarybricks.coinbit.data.database.entities.CoinTransaction
 import com.binarybricks.coinbit.data.database.entities.WatchedCoin
+import com.binarybricks.coinbit.features.dashboard.SortBy
 import com.binarybricks.coinbit.network.BASE_CRYPTOCOMPARE_IMAGE_URL
 import com.binarybricks.coinbit.network.models.CoinPrice
 import com.binarybricks.coinbit.utils.*
@@ -134,6 +135,20 @@ class DashboardCoinModule(
         }
     }
 
-    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin, var coinPrice: CoinPrice?,
-                                       val coinTransactionList: List<CoinTransaction>, val onCoinItemClickListener: OnCoinItemClickListener) : ModuleItem
+    data class DashboardCoinModuleData(val watchedCoin: WatchedCoin,
+                                       var coinPrice: CoinPrice?,
+                                       val coinTransactionList: List<CoinTransaction>,
+                                       val onCoinItemClickListener: OnCoinItemClickListener) : ModuleItem
+
+    class DashboardCoinModuleDataComparator(private val sortBy: SortBy) : Comparator<DashboardCoinModuleData> {
+        override fun compare(coin1: DashboardCoinModuleData, coin2: DashboardCoinModuleData): Int {
+            return when (sortBy) {
+                SortBy.DEFAULT -> coin1.watchedCoin.coin.sortOrder!!.compareTo(coin2.watchedCoin.coin.sortOrder!!)
+                SortBy.NAME -> coin1.watchedCoin.coin.coinName.compareTo(coin2.watchedCoin.coin.coinName)
+                SortBy.TICKER -> coin1.watchedCoin.coin.symbol.compareTo(coin2.watchedCoin.coin.symbol)
+                SortBy.MARKET_CAP -> coin1.coinPrice!!.marketCap!!.compareTo(coin2.coinPrice!!.marketCap!!)
+                SortBy.PERFORMANCE -> -coin1.coinPrice!!.changePercentage24Hour!!.compareTo(coin2.coinPrice!!.changePercentage24Hour!!)
+            }
+        }
+    }
 }

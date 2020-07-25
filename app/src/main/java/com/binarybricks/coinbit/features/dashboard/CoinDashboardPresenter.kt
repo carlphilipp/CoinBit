@@ -56,7 +56,7 @@ class CoinDashboardPresenter(
 
                 currentView?.onCoinPricesLoaded(coinPriceMap)
             } catch (ex: Exception) {
-                Timber.e(ex.localizedMessage)
+                Timber.e(ex, ex.localizedMessage)
             }
         }
     }
@@ -82,6 +82,30 @@ class CoinDashboardPresenter(
             } catch (ex: Exception) {
                 Timber.e(ex.localizedMessage)
             }
+        }
+    }
+
+    override fun sortWatchedCoins(sortBy: SortBy) {
+        launch {
+            dashboardRepository.loadWatchedCoins()!!
+                    .observeOn(rxSchedulers.io())
+                    /*.map { watchedCoins ->
+                        val sortedWatchCoins = watchedCoins.sortedBy {
+                            when(sortBy) {
+                                SortBy.NAME -> it.coin.name
+                                SortBy.TICKER -> it.coin.symbol
+                                SortBy.CAPITALISATION -> it.
+                                SortBy.PERFORMANCE -> TODO()
+                            }
+                        }
+
+                    }*/
+                    .observeOn(rxSchedulers.ui())
+                    .subscribe { sortedWatchCoins ->
+
+                    }
+
+
         }
     }
 }

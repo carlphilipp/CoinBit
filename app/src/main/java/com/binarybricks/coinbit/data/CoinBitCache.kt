@@ -1,5 +1,6 @@
 package com.binarybricks.coinbit.data
 
+import com.binarybricks.coinbit.data.database.entities.WatchedCoin
 import com.binarybricks.coinbit.network.models.*
 
 /**
