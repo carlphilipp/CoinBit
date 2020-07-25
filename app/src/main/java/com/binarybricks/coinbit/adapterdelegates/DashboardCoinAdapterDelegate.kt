@@ -43,7 +43,7 @@ class DashboardCoinAdapterDelegate(
         fun showCoinInfo(dashboardCoinModuleData: DashboardCoinModule.DashboardCoinModuleData, position: Int) {
             // since in order of adding the cards we add the coin modules after top and news we are checking for position 2
             // in future if this order changes or we add new things, we need to change this.
-            dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData, position == 2)
+            dashboardCoinModule.showCoinInfo(itemView, dashboardCoinModuleData, position == 0)
         }
     }
 }

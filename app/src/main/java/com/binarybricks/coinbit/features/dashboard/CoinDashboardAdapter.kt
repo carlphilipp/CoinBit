@@ -35,13 +35,13 @@ class CoinDashboardAdapter(
     private val delegates: AdapterDelegatesManager<List<ModuleItem>> = AdapterDelegatesManager()
 
     init {
-        delegates.addDelegate(DASHBOARD_COIN_List_HEADER, DashboardCoinListHeaderAdapterDelegate())
+        //delegates.addDelegate(DASHBOARD_COIN_List_HEADER, DashboardCoinListHeaderAdapterDelegate())
         delegates.addDelegate(DASHBOARD_COIN, DashboardCoinAdapterDelegate(toCurrency, androidResourceManager))
-        delegates.addDelegate(DASHBOARD_EMPTY_CARD, DashboardEmptyCardAdapterDelegate())
-        delegates.addDelegate(DASHBOARD_HEADER, DashboardHeaderAdapterDelegate(toCurrency, toolbarTitle, androidResourceManager))
-        delegates.addDelegate(DASHBOARD_FOOTER, GenericFooterAdapterDelegate())
-        delegates.addDelegate(DASHBOARD_TOP_CAROUSAL, CarousalAdapterDelegate(toCurrency, androidResourceManager))
-        delegates.addDelegate(DASHBOARD_News, DashboardNewsAdapterDelegate())
+        //delegates.addDelegate(DASHBOARD_EMPTY_CARD, DashboardEmptyCardAdapterDelegate())
+        //delegates.addDelegate(DASHBOARD_HEADER, DashboardHeaderAdapterDelegate(toCurrency, toolbarTitle, androidResourceManager))
+        //delegates.addDelegate(DASHBOARD_FOOTER, GenericFooterAdapterDelegate())
+        //delegates.addDelegate(DASHBOARD_TOP_CAROUSAL, CarousalAdapterDelegate(toCurrency, androidResourceManager))
+        //delegates.addDelegate(DASHBOARD_News, DashboardNewsAdapterDelegate())
         delegates.addDelegate(DASHBOARD_Add_New, DashboardAddNewCoinAdapterDelegate())
     }
 

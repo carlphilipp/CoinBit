@@ -212,10 +212,8 @@ class CoinDashboardFragment : Fragment(), CoinDashboardContract.View {
         adapterDashboardList?.forEachIndexed { index, item ->
             if (item is DashboardCoinModule.DashboardCoinModuleData && coinPriceListMap.contains(item.watchedCoin.coin.symbol.toUpperCase())) {
                 item.coinPrice = coinPriceListMap[item.watchedCoin.coin.symbol.toUpperCase()]
-                //coinDashboardAdapter?.notifyItemChanged(index)
             } else if (item is DashboardHeaderModule.DashboardHeaderModuleData) {
                 item.coinPriceListMap = coinPriceListMap
-                //coinDashboardAdapter?.notifyItemChanged(index)
             }
         }
 
