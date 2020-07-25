@@ -3,6 +3,7 @@ package com.binarybricks.coinbit.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.binarybricks.coinbit.features.dashboard.SortBy
 import timber.log.Timber
 
 /**
@@ -16,6 +17,7 @@ object PreferenceManager {
 
     const val IS_LAUNCH_FTU_SHOWN = "LaunchFtuShown"
     const val DEFAULT_CURRENCY = "DefaultCurrency"
+    private const val DEFAULT_SORT_BY = "DefaultSortBy"
 
     private const val DEFAULT_CURRENCY_VALUE = "USD"
 
@@ -25,6 +27,17 @@ object PreferenceManager {
         }
 
         return DEFAULT_CURRENCY_VALUE
+    }
+
+    fun getDefaultSortBy(context: Context?): SortBy {
+        if (context != null) {
+            return SortBy.valueOf(getPreference(context.applicationContext, DEFAULT_SORT_BY, SortBy.DEFAULT.toString()))
+        }
+        return SortBy.DEFAULT
+    }
+
+    fun setDefaultSortBy(context: Context?, sortBy: SortBy) {
+        setPreference(context!!.applicationContext, DEFAULT_SORT_BY, sortBy.toString())
     }
 
     /**
